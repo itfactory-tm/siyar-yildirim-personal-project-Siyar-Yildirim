@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <x-layout.favicons/>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @livewireStyles
     {{--  ternary operator to give EVERY NAMED SLOT a default value --}}
     <meta name="description" content="{{ $description ?? 'Welcome to Earthify' }}">
     <title>{{ $title ?? 'Earthify' }}</title>
@@ -17,17 +16,10 @@
         <x-layout.nav />
     </header>
     <main class="container mx-auto flex-1 px-4">
-        {{-- Title --}}
-        <h1 class="text-3xl mb-4">
-            {{ $subtitle ?? $title ?? "This page has no (sub)title" }}
-        </h1>
         {{-- Main content --}}
         {{ $slot }}
     </main>
     <x-layout.footer />
 </div>
-{{-- Een stack is een referentie op de pagina waar je later extra code kunt toevoegen --}}
-@stack('script')
-@livewireScripts
 </body>
 </html>

@@ -18,15 +18,17 @@ class ProductSeeder extends Seeder
                     'description' => 'Sustainably sourced bamboo chopping board.',
                     'price'       => 18.95,
                     'stock'       => 20,
+                    'image'       => 'products/bamboo-cutting-board.jpg',
                     'created_at'  => now(),
                 ],
                 [
                     'category_id' => 1,
                     'supplier_id' => 2,
-                    'name'        => 'Reusable Silicone Food Bag (1 L)',
+                    'name'        => 'Reusable Silicone Food Bag',
                     'description' => 'Leak-proof alternative to single-use plastics.',
                     'price'       => 11.50,
                     'stock'       => 40,
+                    'image'       => 'products/food-bag.png',
                     'created_at'  => now(),
                 ],
                 [
@@ -36,6 +38,7 @@ class ProductSeeder extends Seeder
                     'description' => 'Charges by day, lights your evenings off-grid.',
                     'price'       => 24.90,
                     'stock'       => 15,
+                    'image'       => 'products/lantern.png',
                     'created_at'  => now(),
                 ],
                 [
@@ -45,6 +48,7 @@ class ProductSeeder extends Seeder
                     'description' => '4-pack Ni-MH cells plus USB charger.',
                     'price'       => 17.80,
                     'stock'       => 35,
+                    'image'       => 'products/battery.jpg',
                     'created_at'  => now(),
                 ],
                 [
@@ -54,6 +58,7 @@ class ProductSeeder extends Seeder
                     'description' => 'Ultra-light zero-waste alternative to liquid soap.',
                     'price'       => 12.25,
                     'stock'       => 50,
+                    'image'       => 'products/laundry-detergent-strips.png',
                     'created_at'  => now(),
                 ],
                 [
@@ -63,6 +68,7 @@ class ProductSeeder extends Seeder
                     'description' => 'Refillable amber glass bottle with mist nozzle.',
                     'price'       => 6.95,
                     'stock'       => 60,
+                    'image'       => 'products/bottle.jpg',
                     'created_at'  => now(),
                 ],
                 [
@@ -72,6 +78,7 @@ class ProductSeeder extends Seeder
                     'description' => 'Weather-proof, made from 100 % post-consumer plastic.',
                     'price'       => 9.99,
                     'stock'       => 25,
+                    'image'       => 'products/pot.jpg',
                     'created_at'  => now(),
                 ],
                 [
@@ -81,15 +88,17 @@ class ProductSeeder extends Seeder
                     'description' => 'Rust-resistant trowel, fork & transplanter.',
                     'price'       => 29.50,
                     'stock'       => 12,
+                    'image'       => 'products/tools.jpg',
                     'created_at'  => now(),
                 ],
                 [
                     'category_id' => 5,
                     'supplier_id' => 3,
-                    'name'        => 'Bamboo Toothbrush (4-pack)',
+                    'name'        => 'Bamboo Toothbrush (3-pack)',
                     'description' => 'Biodegradable handle, soft plant-based bristles.',
                     'price'       => 8.75,
                     'stock'       => 45,
+                    'image'       => 'products/toothbrush.jpg',
                     'created_at'  => now(),
                 ],
                 [
@@ -99,6 +108,7 @@ class ProductSeeder extends Seeder
                     'description' => 'Sulphate-free, lasts up to 80 washes.',
                     'price'       => 7.60,
                     'stock'       => 30,
+                    'image'       => 'products/shampoo.jpg',
                     'created_at'  => now(),
                 ],
                 [
@@ -108,6 +118,7 @@ class ProductSeeder extends Seeder
                     'description' => 'GOTS-certified, breathable muslin cloth.',
                     'price'       => 19.20,
                     'stock'       => 22,
+                    'image'       => 'products/blanket.png',
                     'created_at'  => now(),
                 ],
                 [
@@ -117,6 +128,7 @@ class ProductSeeder extends Seeder
                     'description' => 'Non-toxic paints on FSC beech wood.',
                     'price'       => 14.40,
                     'stock'       => 18,
+                    'image'       => 'products/toy.png',
                     'created_at'  => now(),
                 ],
             ]

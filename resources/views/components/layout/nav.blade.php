@@ -27,6 +27,12 @@
                         </x-nav-link>
                     @endif
 
+                    @if (Route::has('shop'))
+                        <x-nav-link :href="route('shop')" :active="request()->routeIs('shop')">
+                            {{ __('Shop') }}
+                        </x-nav-link>
+                    @endif
+
                     @if (Route::has('contact'))
                         <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')">
                             {{ __('Contact') }}
@@ -76,6 +82,20 @@
                                     {{ __('Log Out') }}
                                 </x-dropdown-link>
                             </form>
+                            @if(auth()->user()->admin)
+                                <div class="block px-4 py-2 text-xs text-gray-400">Admin</div>
+
+                                <x-dropdown-link :href="route('admin.products')">
+                                {{ __('Products') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link :href="route('admin.categories')">
+                                    {{ __('Categories') }}
+                                </x-dropdown-link>
+                                <div class="border-t border-gray-100"></div>
+                                <x-dropdown-link :href="route('admin.users')">
+                                    {{ __('Users') }}
+                                </x-dropdown-link>
+                            @endif
                         @else
                             <x-dropdown-link :href="route('login')">
                                 {{ __('Log In') }}
@@ -84,14 +104,6 @@
                                 {{ __('Register') }}
                             </x-dropdown-link>
                         @endauth
-
-                        <!-- Admin / Records (visible only to authorised users) -->
-                        @can('manage-products')
-                            <div class="border-t border-gray-200 my-2"></div>
-                            <x-dropdown-link :href="route('admin.products')">
-                                {{ __('Records') }}
-                            </x-dropdown-link>
-                        @endcan
                     </x-slot>
                 </x-dropdown>
             </div>

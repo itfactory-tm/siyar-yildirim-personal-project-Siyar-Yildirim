@@ -9,7 +9,6 @@ class CategorySeeder extends Seeder
 {
     public function run(): void
     {
-        // Insert some categories
         DB::table('categories')->insert(
             [
                 ['name' => 'Kitchen & Dining',   'created_at' => now()],

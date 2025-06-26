@@ -1,17 +1,31 @@
 <?php
 
+use App\Http\Middleware\ActiveUser;
+use App\Http\Middleware\Admin;
+use App\Livewire\Admin\Categories;
+use App\Livewire\Admin\Products;
+use App\Livewire\Admin\Users;
+use App\Livewire\Shop;
+
 use Illuminate\Support\Facades\Route;
 // Laravel facade and helper functions
 Route::view('/', 'home')->name('home');
 Route::view('contact', 'contact')->name('contact');
-Route::get('admin/products', function () {
-    return view('admin.products.index');
-})->name('admin.products');
+Route::get('shop', Shop::class)->name('shop');
+
+Route::middleware(['auth', Admin::class, ActiveUser::class])->prefix('admin')->name('admin.')->group(function () {
+    Route::redirect('/', '/admin/products');
+    Route::get('categories', Categories::class)->name('categories');
+    Route::get('products', Products::class)->name('products');
+    Route::get('users', Users::class)->name('users');
+
+});
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    ActiveUser::class,
 ])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
