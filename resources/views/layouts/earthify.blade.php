@@ -3,23 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <x-layout.favicons/>
+    <x-layout.favicons />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    {{--  ternary operator to give EVERY NAMED SLOT a default value --}}
+    @livewireStyles
     <meta name="description" content="{{ $description ?? 'Welcome to Earthify' }}">
     <title>{{ $title ?? 'Earthify' }}</title>
 </head>
-<body class="font-sans antialiased">
-<div class="flex flex-col space-y-2 min-h-screen text-gray-800 bg-gray-100">
+<body class="font-sans antialiased bg-gray-100 text-gray-800">
+<div class="flex flex-col min-h-screen space-y-2">
     <header class="shadow bg-white/70 sticky inset-0 backdrop-blur-sm z-10">
-        {{--  Navigation  --}}
         <x-layout.nav />
     </header>
     <main class="container mx-auto flex-1 px-4">
-        {{-- Main content --}}
         {{ $slot }}
     </main>
     <x-layout.footer />
 </div>
+@livewireScripts
 </body>
 </html>

@@ -60,6 +60,11 @@ class Categories extends Component
 
     public function delete(Category $category)
     {
+        if ($category->products()->count() > 0) {
+            $this->addError('delete', 'Cannot delete this category because it contains ' . $category->products()->count() . ' product(s). Please delete all products from this category first.');
+            return;
+        }
+
         $category->delete();
     }
 

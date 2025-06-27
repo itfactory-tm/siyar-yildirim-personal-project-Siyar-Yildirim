@@ -9,21 +9,11 @@
 
             <div class="flex flex-col sm:flex-row gap-3">
                 <div class="min-w-80">
-                    <x-tmk.form.search
-                        placeholder="Search products by name..."
-                        wire:model.live.debounce.500ms="search"
-                        size="md"
-                        variant="filled"
-                        clearable="true"
-                        icon="true"
-                    />
+                    <x-tmk.form.search placeholder="Search products by name..." wire:model.live.debounce.1000ms="search"
+                        size="md" variant="filled" clearable="true" icon="true"/>
                 </div>
 
-                <x-tmk.form.button
-                    variant="primary"
-                    size="md"
-                    wire:click="newProduct"
-                >
+                <x-tmk.form.button variant="primary" size="md" wire:click="newProduct">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                     </svg>
@@ -81,23 +71,17 @@
     </x-tmk.section>
 
     {{-- Products Table Section --}}
-    <x-tmk.section background="white" padding="py-6">
+    <x-tmk.section padding="py-6">
         {{-- Table Header with Pagination Controls --}}
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <div class="flex  flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
             <div class="flex items-center gap-4">
                 <h2 class="text-lg font-semibold text-gray-900">Products List</h2>
 
                 {{-- Per Page Selector --}}
                 <div class="flex items-center gap-2">
                     <label for="perPage" class="text-sm text-gray-600">Show:</label>
-                    <x-tmk.form.select
-                        id="perPage"
-                        wire:model.live="perPage"
-                        variant="outline"
-                        size="sm"
-                        class="w-20"
-                        :options="[5 => '5', 10 => '10', 15 => '15', 20 => '20', 50 => '50']"
-                    />
+                    <x-tmk.form.select id="perPage" wire:model.live="perPage" variant="outline"
+                        size="sm" class="w-20" :options="[5 => '5', 10 => '10', 15 => '15', 20 => '20', 50 => '50']"/>
                     <span class="text-sm text-gray-600">entries</span>
                 </div>
             </div>
@@ -181,24 +165,14 @@
                         {{-- Actions --}}
                         <td class="px-6 py-4 text-center">
                             <div class="flex items-center justify-center space-x-2">
-                                <x-tmk.form.button
-                                    variant="secondary"
-                                    size="sm"
-                                    wire:click="editRecord({{ $product->id }})"
-                                    title="Edit product"
-                                >
+                                <x-tmk.form.button variant="secondary" size="sm" wire:click="editRecord({{ $product->id }})" title="Edit product">
                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                     </svg>
                                     Edit
                                 </x-tmk.form.button>
 
-                                <x-tmk.form.button
-                                    variant="danger"
-                                    size="sm"
-                                    wire:click="confirmDelete({{ $product->id }})"
-                                    title="Delete product"
-                                >
+                                <x-tmk.form.button variant="danger" size="sm" wire:click="confirmDelete({{ $product->id }})" title="Delete product">
                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                     </svg>
@@ -223,12 +197,8 @@
                                     @endif
                                 </p>
                                 @if(!$search)
-                                    <div class="mt-6">
-                                        <x-tmk.button
-                                            color="primary"
-                                            wire:click="newProduct"
-                                            icon='<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>'
-                                        >
+                                    <div class="mt-6"><x-tmk.button color="primary" wire:click="newProduct"
+                                            icon='<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>'>
                                             Add Product
                                         </x-tmk.button>
                                     </div>
@@ -283,42 +253,24 @@
                 {{-- Product Name --}}
                 <div>
                     <x-label for="name" value="Product Name" class="text-sm font-medium text-gray-700" />
-                    <x-input
-                        id="name"
-                        type="text"
-                        wire:model="form.name"
-                        placeholder="Enter a descriptive product name"
-                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                    />
+                    <x-input id="name" type="text" wire:model="form.name" placeholder="Enter a descriptive product name"
+                             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"/>
                 </div>
 
                 {{-- Description --}}
                 <div>
                     <x-label for="description" value="Description" class="text-sm font-medium text-gray-700" />
-                    <x-tmk.form.textarea
-                        id="description"
-                        name="description"
-                        wire:model="form.description"
-                        placeholder="Provide a detailed description of the product"
-                        rows="3"
-                        maxlength="500"
-                        showCounter="true"
-                        class="mt-1"
-                    />
+                    <x-tmk.form.textarea id="description" name="description" wire:model="form.description"
+                        placeholder="Provide a detailed description of the product" rows="3" maxlength="500"
+                        showCounter="true" class="mt-1"/>
                 </div>
 
                 {{-- Category and Supplier Row --}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <x-label for="category_id" value="Category" class="text-sm font-medium text-gray-700" />
-                        <x-tmk.form.select
-                            wire:model="form.category_id"
-                            id="category_id"
-                            name="category_id"
-                            class="mt-1 w-full"
-                            variant="default"
-                            emptyText="Select a category"
-                        >
+                        <x-tmk.form.select wire:model="form.category_id" id="category_id" name="category_id"
+                            class="mt-1 w-full" variant="default" emptyText="Select a category">
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
@@ -327,14 +279,8 @@
 
                     <div>
                         <x-label for="supplier_id" value="Supplier" class="text-sm font-medium text-gray-700" />
-                        <x-tmk.form.select
-                            wire:model="form.supplier_id"
-                            id="supplier_id"
-                            name="supplier_id"
-                            class="mt-1 w-full"
-                            variant="default"
-                            emptyText="Select a supplier"
-                        >
+                        <x-tmk.form.select wire:model="form.supplier_id" id="supplier_id" name="supplier_id"
+                            class="mt-1 w-full" variant="default" emptyText="Select a supplier">
                             @foreach($suppliers as $supplier)
                                 <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
                             @endforeach
@@ -350,28 +296,16 @@
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <span class="text-gray-500 sm:text-sm">$</span>
                             </div>
-                            <x-input
-                                id="price"
-                                type="number"
-                                step="0.01"
-                                min="0"
-                                wire:model="form.price"
-                                placeholder="0.00"
-                                class="pl-7 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                            />
+                            <x-input id="price" type="number" step="0.01" min="0"
+                                wire:model="form.price" placeholder="0.00"
+                                     class="pl-7 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"/>
                         </div>
                     </div>
 
                     <div>
                         <x-label for="stock" value="Stock Quantity" class="text-sm font-medium text-gray-700" />
-                        <x-input
-                            id="stock"
-                            type="number"
-                            min="0"
-                            wire:model="form.stock"
-                            placeholder="0"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                        />
+                        <x-input id="stock" type="number" min="0" wire:model="form.stock" placeholder="0"
+                                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"/>
                     </div>
                 </div>
             </div>
@@ -379,30 +313,19 @@
 
         <x-slot name="footer">
             <div class="flex justify-end space-x-3">
-                <x-tmk.form.button
-                    variant="secondary"
-                    @click="$wire.showModal = false"
-                >
+                <x-tmk.form.button variant="secondary" @click="$wire.showModal = false">
                     Cancel
                 </x-tmk.form.button>
 
                 @if(is_null($form->id))
-                    <x-tmk.form.button
-                        variant="success"
-                        wire:click="createProduct"
-                        loading="{{ $loading ?? false }}"
-                    >
+                    <x-tmk.form.button variant="success" wire:click="createProduct" loading="{{ $loading ?? false }}">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                         </svg>
                         Create Product
                     </x-tmk.form.button>
                 @else
-                    <x-tmk.form.button
-                        variant="primary"
-                        wire:click="updateRecord({{ $form->id }})"
-                        loading="{{ $loading ?? false }}"
-                    >
+                    <x-tmk.form.button variant="primary" wire:click="updateRecord({{ $form->id }})" loading="{{ $loading ?? false }}">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
@@ -417,11 +340,6 @@
     <x-confirmation-modal wire:model.live="showDeleteModal">
         <x-slot name="title">
             <div class="flex items-center">
-                <div class="p-2 bg-red-100 rounded-lg mr-3">
-                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                    </svg>
-                </div>
                 <div>
                     <h3 class="text-lg font-medium text-gray-900">Delete Product</h3>
                     <p class="text-sm text-gray-500">This action cannot be undone</p>
@@ -454,20 +372,11 @@
 
         <x-slot name="footer">
             <div class="flex justify-end space-x-3">
-                <x-tmk.form.button
-                    variant="secondary"
-                    wire:click="cancelDelete"
-                    wire:loading.attr="disabled"
-                >
+                <x-tmk.form.button variant="secondary" wire:click="cancelDelete" wire:loading.attr="disabled">
                     Cancel
                 </x-tmk.form.button>
 
-                <x-tmk.form.button
-                    variant="danger"
-                    wire:click="deleteProduct"
-                    wire:loading.attr="disabled"
-                    loading="{{ $loading ?? false }}"
-                >
+                <x-tmk.form.button variant="danger" wire:click="deleteProduct" wire:loading.attr="disabled" loading="{{ $loading ?? false }}">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                     </svg>

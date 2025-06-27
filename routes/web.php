@@ -27,7 +27,7 @@ Route::middleware([
     'verified',
     ActiveUser::class,
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/', function () {
+        return view('home');
+    })->name('home');
 });

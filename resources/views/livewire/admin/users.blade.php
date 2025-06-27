@@ -1,5 +1,5 @@
 <div>
-    {{-- Flash Messages with improved styling --}}
+    {{-- Flash Messages --}}
     @if (session('success'))
         <x-tmk.alert type="success" dismissible="true" class="mb-6 shadow-lg animate-fade-in">
             <span class="font-medium">Success!</span> {{ session('success') }}
@@ -18,22 +18,15 @@
         <p class="mt-2 text-gray-600">Manage your application users, permissions, and access control</p>
     </div>
 
-    {{-- Filters Section with enhanced design --}}
+    {{-- Filters Section --}}
         <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden mb-6 py-0" >
             {{-- Search and Filters Bar --}}
             <div class="p-6 bg-gradient-to-r from-gray-50 to-white">
                 <div class="flex flex-col lg:flex-row gap-4">
                     {{-- Search Input --}}
                     <div class="flex-1">
-                        <x-tmk.form.search
-                            placeholder="Search users by name or email..."
-                            wire:model.live.debounce.500ms="search"
-                            size="lg"
-                            variant="filled"
-                            icon="true"
-                            clearable="true"
-                            class="shadow-sm"
-                        />
+                        <x-tmk.form.search placeholder="Search users by name or email..." wire:model.live.debounce.500ms="search"
+                            size="lg" variant="filled" icon="true" clearable="true" class="shadow-sm"/>
                     </div>
 
                     {{-- Filter Buttons --}}
@@ -65,10 +58,8 @@
                         </button>
 
                         @if($search || $showActiveOnly || $showAdminsOnly)
-                            <button wire:click="clearFilters"
-                                    class="px-5 py-2.5 text-sm font-medium bg-white border border-gray-300 text-gray-700
-                                           hover:bg-red-50 hover:border-red-300 hover:text-red-700 rounded-lg
-                                           transition-all duration-200 flex items-center gap-2 shadow-sm">
+                            <button wire:click="clearFilters" class="px-5 py-2.5 text-sm font-medium bg-white border border-gray-300 text-gray-700
+                                           hover:bg-red-50 hover:border-red-300 hover:text-red-700 rounded-lg transition-all duration-200 flex items-center gap-2 shadow-sm">
                                 <x-phosphor-x class="size-4"/>
                                 Clear Filters
                             </button>
@@ -76,11 +67,7 @@
                     </div>
 
                     {{-- Add New User Button --}}
-                    <x-tmk.button
-                        wire:click="newUser()"
-                        color="primary"
-                        size="lg"
-                        class="shadow-sm">
+                    <x-tmk.button wire:click="newUser()" color="primary" size="lg" class="shadow-sm">
                         Add New User
                     </x-tmk.button>
                 </div>
@@ -99,9 +86,6 @@
                         <span class="text-gray-600">
                             Admins: <span class="font-semibold text-purple-600">{{ $users->where('admin', true)->count() }}</span>
                         </span>
-                    </div>
-                    <div class="text-gray-500">
-                        Showing {{ $users->firstItem() ?? 0 }} to {{ $users->lastItem() ?? 0 }} of {{ $users->total() }} results
                     </div>
                 </div>
             </div>
@@ -173,12 +157,8 @@
                         <th class="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                             <div class="flex items-center justify-end gap-2">
                                 <span>Show</span>
-                                <x-tmk.form.select
-                                    id="perPage"
-                                    wire:model.live="perPage"
-                                    variant="compact"
-                                    size="xs"
-                                    class="w-16">
+                                <x-tmk.form.select id="perPage" wire:model.live="perPage"
+                                    variant="compact" size="xs" class="w-16">
                                     @foreach([5, 10, 15, 20] as $value)
                                         <option value="{{ $value }}">{{ $value }}</option>
                                     @endforeach
@@ -289,11 +269,6 @@
                     </tbody>
                 </table>
             </div>
-
-            {{-- Bottom Pagination --}}
-            <div class="p-4 border-t border-gray-200 bg-gray-50">
-                {{ $users->links() }}
-            </div>
         </div>
 
     {{-- Modal for add and update user --}}
@@ -321,9 +296,7 @@
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <x-phosphor-user class="size-5 text-gray-400"/>
                         </div>
-                        <x-input id="name" type="text"
-                                 wire:model="form.name"
-                                 placeholder="Enter user's full name"
+                        <x-input id="name" type="text" wire:model="form.name" placeholder="Enter user's full name"
                                  class="pl-10 block w-full rounded-lg border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"/>
                     </div>
                 </div>
@@ -335,9 +308,7 @@
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <x-phosphor-envelope class="size-5 text-gray-400"/>
                         </div>
-                        <x-input id="email" type="email"
-                                 wire:model="form.email"
-                                 placeholder="user@example.com"
+                        <x-input id="email" type="email" wire:model="form.email" placeholder="user@example.com"
                                  class="pl-10 block w-full rounded-lg border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"/>
                     </div>
                 </div>
@@ -349,8 +320,7 @@
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <x-phosphor-lock class="size-5 text-gray-400"/>
                         </div>
-                        <x-input id="password" type="password"
-                                 wire:model="form.password"
+                        <x-input id="password" type="password" wire:model="form.password"
                                  placeholder="{{ $form->id ? 'Leave empty to keep current password' : 'Leave empty for default (user1234)' }}"
                                  class="pl-10 block w-full rounded-lg border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"/>
                     </div>
@@ -370,13 +340,11 @@
                         {{-- Admin Toggle --}}
                         <div class="bg-white rounded-lg p-4 border border-gray-200">
                             <label class="flex items-center justify-between cursor-pointer">
-                                <div class="flex items-center gap-3">
                                     <x-phosphor-crown class="size-5 text-purple-600"/>
                                     <div>
                                         <span class="text-sm font-medium text-gray-900">Administrator</span>
                                         <p class="text-xs text-gray-500">Full system access</p>
                                     </div>
-                                </div>
                                 <input type="checkbox"
                                        wire:model="form.admin"
                                        {{ $form->id === auth()->id() ? 'disabled' : '' }}
@@ -439,9 +407,7 @@
 
         <x-slot name="content">
             <div class="mt-2">
-                <p class="text-sm text-gray-500">
-                    Are you sure you want to delete this user account? This action cannot be undone.
-                </p>
+                <p class="text-sm text-gray-500"> Are you sure you want to delete this user account? This action cannot be undone.</p>
                 @if($userToDelete)
                     <div class="mt-4 p-4 bg-red-50 rounded-lg border border-red-200">
                         <div class="flex items-center gap-3">

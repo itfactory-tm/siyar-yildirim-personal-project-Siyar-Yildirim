@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white/80 backdrop-blur-lg shadow-sm border-b border-emerald-100">
+<nav x-data="{ open: false }" class="relative z-50 bg-white/80 backdrop-blur-lg shadow-sm border-b border-emerald-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <!-- Logo & Primary Links -->
@@ -15,50 +15,20 @@
 
                 <!-- Desktop Nav Links -->
                 <div class="hidden space-x-4 sm:-my-px sm:ml-10 sm:flex items-center">
-                    @if (Route::has('home'))
-                        <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                            {{ __('Home') }}
-                        </x-nav-link>
-                    @endif
-
-                    @if (Route::has('products.index'))
-                        <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.*')">
-                            {{ __('Shop') }}
-                        </x-nav-link>
-                    @endif
-
-                    @if (Route::has('shop'))
-                        <x-nav-link :href="route('shop')" :active="request()->routeIs('shop')">
-                            {{ __('Shop') }}
-                        </x-nav-link>
-                    @endif
-
-                    @if (Route::has('contact'))
-                        <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')">
-                            {{ __('Contact') }}
-                        </x-nav-link>
-                    @endif
+                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                        {{ __('Home') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('shop')" :active="request()->routeIs('shop')">
+                        {{ __('Shop') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')">
+                        {{ __('Contact') }}
+                    </x-nav-link>
                 </div>
             </div>
 
             <!-- Secondary Menu (Cart + User) -->
             <div class="hidden sm:flex sm:items-center gap-4">
-                <!-- Cart -->
-                @if (Route::has('cart.index'))
-                    <a href="{{ route('cart.index') }}" class="relative inline-flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4" />
-                            <circle cx="9" cy="20" r="1" />
-                            <circle cx="17" cy="20" r="1" />
-                        </svg>
-                        @if(Cart::count())
-                            <span class="absolute -top-2 -right-2 text-xs bg-emerald-600 text-white rounded-full px-1.5">
-                                {{ Cart::count() }}
-                            </span>
-                        @endif
-                    </a>
-                @endif
-
                 <!-- User Dropdown -->
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
@@ -123,26 +93,12 @@
     <!-- Mobile Navigation -->
     <div :class="{ 'block': open, 'hidden': !open }" class="sm:hidden bg-white/90">
         <div class="pt-2 pb-3 space-y-1">
-            @if (Route::has('home'))
-                <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="block pl-3 pr-4 text-base">
-                    {{ __('Home') }}
-                </x-nav-link>
-            @endif
-            @if (Route::has('products.index'))
-                <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.*')" class="block pl-3 pr-4 text-base">
-                    {{ __('Shop') }}
-                </x-nav-link>
-            @endif
-            @if (Route::has('contact'))
-                <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')" class="block pl-3 pr-4 text-base">
-                    {{ __('Contact') }}
-                </x-nav-link>
-            @endif
-            @can('manage-products')
-                <x-nav-link :href="route('admin.products')" :active="request()->routeIs('admin.products')" class="block pl-3 pr-4 text-base">
-                    {{ __('Records') }}
-                </x-nav-link>
-            @endcan
+            <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="block pl-3 pr-4 text-base">
+                {{ __('Home') }}
+            </x-nav-link>
+            <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')" class="block pl-3 pr-4 text-base">
+                {{ __('Contact') }}
+            </x-nav-link>
         </div>
 
         <!-- Mobile User Options -->

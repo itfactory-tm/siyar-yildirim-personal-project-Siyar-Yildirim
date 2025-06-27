@@ -29,10 +29,7 @@
                         wire:target="create"
                         class="hidden size-5 text-blue-500 absolute top-3 right-3 animate-spin"/>
                 </div>
-                <x-tmk.button wire:click="create()"
-                              color="primary"
-                              size="lg"
-                              class="shadow-sm">
+                <x-tmk.button wire:click="create()" color="primary" size="lg" class="shadow-sm">
                     <x-phosphor-plus class="size-5 mr-2"/>
                     Add Category
                 </x-tmk.button>
@@ -56,6 +53,41 @@
         </div>
     </div>
 
+    {{-- Error Messages Section --}}
+    @if ($errors->has('delete'))
+        <div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
+            <div class="flex items-start">
+                <div class="flex-shrink-0">
+                    <x-phosphor-warning-circle class="size-5 text-red-400" />
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-red-800">
+                        Unable to Delete Category
+                    </h3>
+                    <div class="mt-2 text-sm text-red-700">
+                        {{ $errors->first('delete') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    {{-- Success Messages Section --}}
+    @if (session()->has('message'))
+        <div class="bg-green-50 border border-green-200 rounded-xl p-4 mb-6">
+            <div class="flex items-start">
+                <div class="flex-shrink-0">
+                    <x-phosphor-check-circle class="size-5 text-green-400" />
+                </div>
+                <div class="ml-3">
+                    <div class="text-sm text-green-700">
+                        {{ session('message') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     {{-- Categories Table Section --}}
     <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
         {{-- Table Header --}}
@@ -75,10 +107,7 @@
                 <thead>
                 <tr class="bg-gray-50 border-b border-gray-200">
                     <x-tmk.table.sortable-header
-                        wire:click="resort('id')"
-                        position="center"
-                        :sortColumn="$sortColumn"
-                        :sortOrder="$sortOrder"
+                        wire:click="resort('id')" position="center" :sortColumn="$sortColumn" :sortOrder="$sortOrder"
                         class="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors">
                         <div class="flex items-center justify-center gap-1">
                             ID
@@ -94,10 +123,7 @@
                         </div>
                     </x-tmk.table.sortable-header>
                     <x-tmk.table.sortable-header
-                        wire:click="resort('products_count')"
-                        position="center"
-                        :sortColumn="$sortColumn"
-                        :sortOrder="$sortOrder"
+                        wire:click="resort('products_count')" position="center" :sortColumn="$sortColumn" :sortOrder="$sortOrder"
                         class="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors">
                         <div class="flex items-center justify-center gap-1">
                             Products
@@ -116,9 +142,7 @@
                         Actions
                     </th>
                     <x-tmk.table.sortable-header
-                        wire:click="resort('name')"
-                        :sortColumn="$sortColumn"
-                        :sortOrder="$sortOrder"
+                        wire:click="resort('name')" :sortColumn="$sortColumn" :sortOrder="$sortOrder"
                         class="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider text-left cursor-pointer hover:bg-gray-100 transition-colors">
                         <div class="flex items-center gap-1">
                             Category Name
@@ -137,20 +161,17 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                 @forelse($categories as $category)
-                    <tr wire:key="{{ $category->id }}"
-                        class="hover:bg-gray-50 transition-colors">
+                    <tr wire:key="{{ $category->id }}" class="hover:bg-gray-50 transition-colors">
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">
                             #{{ $category->id }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-center">
                             @if($category->products_count > 0)
                                 <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-800 border border-blue-200">
-                                        {{ $category->products_count }}
-                                    </span>
+                                        {{ $category->products_count }}</span>
                             @else
                                 <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
-                                        0
-                                    </span>
+                                    0</span>
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
