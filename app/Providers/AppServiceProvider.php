@@ -11,7 +11,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->alias(App\Helpers\Cart::class, 'Card');
     }
 
     /**
