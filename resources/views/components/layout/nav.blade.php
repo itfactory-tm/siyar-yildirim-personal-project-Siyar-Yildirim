@@ -51,6 +51,9 @@
                             <x-dropdown-link :href="route('profile.show')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
+                            <x-dropdown-link :href="route('user.history')">
+                                {{ __('History') }}
+                            </x-dropdown-link>
                             <form method="POST" action="{{ route('logout') }}" x-data>
                                 @csrf
                                 <x-dropdown-link :href="route('logout')" @click.prevent="$root.submit();">
@@ -70,6 +73,11 @@
                                 <x-dropdown-link :href="route('admin.users')">
                                     {{ __('Users') }}
                                 </x-dropdown-link>
+                                <div class="border-t border-gray-100"></div>
+                                <x-dropdown-link :href="route('admin.orders')">
+                                    {{ __('Orders') }}
+                                </x-dropdown-link>
+
                             @endif
                         @else
                             <x-dropdown-link :href="route('login')">
