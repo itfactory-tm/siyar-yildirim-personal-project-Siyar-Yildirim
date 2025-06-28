@@ -6,9 +6,7 @@
                 <!-- Logo / Brand -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('home') }}" class="flex items-center gap-1 text-2xl font-semibold text-emerald-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c1.38 0 2.5-1.12 2.5-2.5S13.38 3 12 3 9.5 4.12 9.5 5.5 10.62 8 12 8zM12 8v13M5 21h14" />
-                        </svg>
+                        <x-phosphor-plant class="w-6 h-6" />
                         Earthify
                     </a>
                 </div>
@@ -39,9 +37,7 @@
                     <x-slot name="trigger">
                         <button class="flex items-center text-sm font-medium text-gray-600 hover:text-emerald-700 focus:outline-none transition">
                             <span>{{ Auth::user()->name ?? __('Account') }}</span>
-                            <svg class="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                            </svg>
+                            <x-phosphor-caret-down class="ml-1 h-4 w-4" />
                         </button>
                     </x-slot>
 
@@ -97,10 +93,8 @@
             <!-- Mobile Menu Button -->
             <div class="-mr-2 flex items-center sm:hidden">
                 <button @click="open = !open" class="inline-flex items-center justify-center p-2 rounded-md text-emerald-700 hover:bg-emerald-50 focus:outline-none focus:bg-emerald-50 transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path :class="{ 'hidden': open, 'inline-flex': !open }" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{ 'hidden': !open, 'inline-flex': open }" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    <x-phosphor-list class="h-6 w-6" x-show="!open" />
+                    <x-phosphor-x class="h-6 w-6" x-show="open" />
                 </button>
             </div>
         </div>

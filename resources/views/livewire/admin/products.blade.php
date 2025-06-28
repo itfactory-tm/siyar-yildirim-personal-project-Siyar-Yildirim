@@ -13,12 +13,7 @@
                         size="md" variant="filled" clearable="true" icon="true"/>
                 </div>
 
-                <x-tmk.form.button variant="primary" size="md" wire:click="newProduct">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                    </svg>
-                    New Product
-                </x-tmk.form.button>
+                <x-tmk.form.button variant="primary" size="md" wire:click="newProduct">New Product</x-tmk.form.button>
             </div>
         </div>
     </x-tmk.section>
@@ -29,9 +24,7 @@
             <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
                 <div class="flex items-center">
                     <div class="p-2 bg-blue-100 rounded-lg">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-                        </svg>
+                        <x-phosphor-archive class="w-6 h-6 text-blue-600" />
                     </div>
                     <div class="ml-4">
                         <p class="text-sm font-medium text-gray-600">Total Products</p>
@@ -43,9 +36,7 @@
             <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
                 <div class="flex items-center">
                     <div class="p-2 bg-green-100 rounded-lg">
-                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
+                        <x-phosphor-check-circle class="w-6 h-6 text-green-600" />
                     </div>
                     <div class="ml-4">
                         <p class="text-sm font-medium text-gray-600">In Stock</p>
@@ -57,9 +48,7 @@
             <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
                 <div class="flex items-center">
                     <div class="p-2 bg-red-100 rounded-lg">
-                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
-                        </svg>
+                        <x-phosphor-warning class="w-6 h-6 text-red-600" />
                     </div>
                     <div class="ml-4">
                         <p class="text-sm font-medium text-gray-600">Out of Stock</p>
@@ -108,7 +97,7 @@
             </div>
         </div>
 
-        {{-- Enhanced Table --}}
+        {{-- Table --}}
         <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
             <table class="min-w-full divide-y divide-gray-300">
                 <thead class="bg-gray-50">
@@ -138,7 +127,7 @@
                             <div class="flex items-center">
                                 <div class="h-12 w-12 flex-shrink-0">
                                     <div class="h-12 w-12 rounded-lg bg-gradient-to-br from-black to-gray-50 flex items-center justify-center">
-                                        <span class="text-white font-semibold text-lg">{{ substr($product->name, 0, 1) }}</span>
+                                        <span class="text-white font-semibold text-lg">{{ $product->name ? substr($product->name, 0, 1) : '?' }}</span>
                                     </div>
                                 </div>
                                 <div class="ml-4">
@@ -150,9 +139,9 @@
 
                         {{-- Category --}}
                         <td class="px-6 py-4 text-center">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                    {{ $product->category->name ?? 'No Category' }}
-                                </span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                {{ $product->category->name ?? 'No Category' }}
+                            </span>
                         </td>
 
                         {{-- Price --}}
@@ -165,16 +154,16 @@
                             <div class="flex items-center justify-center">
                                 @if($product->stock > 10)
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                            {{ $product->stock }} units
-                                        </span>
+                                        {{ $product->stock }} units
+                                    </span>
                                 @elseif($product->stock > 0)
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                                            {{ $product->stock }} units
-                                        </span>
+                                        {{ $product->stock }} units
+                                    </span>
                                 @else
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                            Out of stock
-                                        </span>
+                                        Out of stock
+                                    </span>
                                 @endif
                             </div>
                         </td>
@@ -183,16 +172,12 @@
                         <td class="px-6 py-4 text-center">
                             <div class="flex items-center justify-center space-x-2">
                                 <x-tmk.form.button variant="secondary" size="sm" wire:click="editRecord({{ $product->id }})" title="Edit product">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                                    </svg>
+                                    <x-phosphor-pencil class="w-4 h-4 mr-1" />
                                     Edit
                                 </x-tmk.form.button>
 
                                 <x-tmk.form.button variant="danger" size="sm" wire:click="confirmDelete({{ $product->id }})" title="Delete product">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                    </svg>
+                                    <x-phosphor-trash class="w-4 h-4 mr-1" />
                                     Delete
                                 </x-tmk.form.button>
                             </div>
@@ -202,9 +187,7 @@
                     <tr>
                         <td colspan="6" class="px-6 py-12">
                             <div class="text-center">
-                                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-                                </svg>
+                                <x-phosphor-package class="mx-auto h-12 w-12 text-gray-400" />
                                 <h3 class="mt-2 text-sm font-medium text-gray-900">No products found</h3>
                                 <p class="mt-1 text-sm text-gray-500">
                                     @if($search)
@@ -235,19 +218,15 @@
         @endif
     </x-tmk.section>
 
-    {{-- Enhanced Modal for add and update product --}}
+    {{-- Modal for add and update product --}}
     <x-dialog-modal id="productModal" wire:model.live="showModal">
         <x-slot name="title">
             <div class="flex items-center">
                 <div class="p-2 bg-blue-100 rounded-lg mr-3">
                     @if(is_null($form->id))
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                        </svg>
+                        <x-phosphor-plus class="w-6 h-6 text-blue-600" />
                     @else
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                        </svg>
+                        <x-phosphor-pencil class="w-6 h-6 text-blue-600" />
                     @endif
                 </div>
                 <div>
@@ -277,8 +256,8 @@
                 <div>
                     <x-label for="description" value="Description" class="text-sm font-medium text-gray-700" />
                     <x-tmk.form.textarea id="description" name="description" wire:model="form.description"
-                        placeholder="Provide a detailed description of the product" rows="3" maxlength="500"
-                        showCounter="true" class="mt-1"/>
+                                         placeholder="Provide a detailed description of the product" rows="3" maxlength="500"
+                                         showCounter="true" class="mt-1"/>
                 </div>
 
                 {{-- Category and Supplier Row --}}
@@ -286,7 +265,7 @@
                     <div>
                         <x-label for="category_id" value="Category" class="text-sm font-medium text-gray-700" />
                         <x-tmk.form.select wire:model="form.category_id" id="category_id" name="category_id"
-                            class="mt-1 w-full" variant="default" emptyText="Select a category">
+                                           class="mt-1 w-full" variant="default" emptyText="Select a category">
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
@@ -296,7 +275,7 @@
                     <div>
                         <x-label for="supplier_id" value="Supplier" class="text-sm font-medium text-gray-700" />
                         <x-tmk.form.select wire:model="form.supplier_id" id="supplier_id" name="supplier_id"
-                            class="mt-1 w-full" variant="default" emptyText="Select a supplier">
+                                           class="mt-1 w-full" variant="default" emptyText="Select a supplier">
                             @foreach($suppliers as $supplier)
                                 <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
                             @endforeach
@@ -312,8 +291,7 @@
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <span class="text-gray-500 sm:text-sm">$</span>
                             </div>
-                            <x-input id="price" type="number" step="0.01" min="0"
-                                wire:model="form.price" placeholder="0.00"
+                            <x-input id="price" type="number" step="0.01" min="0" wire:model="form.price" placeholder="0.00"
                                      class="pl-7 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"/>
                         </div>
                     </div>
@@ -335,16 +313,11 @@
 
                 @if(is_null($form->id))
                     <x-tmk.form.button variant="success" wire:click="createProduct" loading="{{ $loading ?? false }}">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                        </svg>
                         Create Product
                     </x-tmk.form.button>
                 @else
                     <x-tmk.form.button variant="primary" wire:click="updateRecord({{ $form->id }})" loading="{{ $loading ?? false }}">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
+                        <x-phosphor-check class="w-4 h-4 mr-2 text-current" />
                         Save Changes
                     </x-tmk.form.button>
                 @endif
@@ -393,9 +366,7 @@
                 </x-tmk.form.button>
 
                 <x-tmk.form.button variant="danger" wire:click="deleteProduct" wire:loading.attr="disabled" loading="{{ $loading ?? false }}">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                    </svg>
+                    <x-phosphor-trash class="w-4 h-4 mr-2 text-current" />
                     Delete Product
                 </x-tmk.form.button>
             </div>

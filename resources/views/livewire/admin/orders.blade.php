@@ -21,9 +21,7 @@
                 <div class="p-4 bg-gradient-to-r from-amber-50 to-orange-50 border-b border-gray-200">
                     <div class="flex items-start gap-3">
                         <div class="flex-shrink-0 w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center">
-                            <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                            </svg>
+                            <x-phosphor-user class="w-4 h-4 text-amber-600" />
                         </div>
                         <div class="flex-1 min-w-0">
                             <p class="text-sm font-semibold text-gray-800 truncate">{{ $order->user->name }}</p>
@@ -51,9 +49,7 @@
                                     <h4 class="font-medium text-gray-900 truncate">{{ $orderline->product_name }}</h4>
                                     <div class="flex items-center gap-4 text-sm text-gray-500">
                                         <span class="flex items-center gap-1">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
-                                            </svg>
+                                            <x-phosphor-tag class="w-4 h-4" />
                                             Qty: {{ $orderline->quantity }}
                                         </span>
                                         <span class="font-semibold text-green-600">€ {{ number_format($orderline->line_total, 2) }}</span>
@@ -79,9 +75,7 @@
                 <div class="relative overflow-hidden rounded-xl border border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50 p-8 text-center">
                     <div class="relative z-10">
                         <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
-                            <svg class="h-8 w-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                            </svg>
+                            <x-phosphor-shopping-bag class="h-8 w-8 text-blue-600" />
                         </div>
                         <h3 class="text-xl font-semibold text-gray-900 mb-2">No Orders Found</h3>
                         <p class="text-gray-600 max-w-md mx-auto">There are no orders to display at the moment. New orders will appear here once they're placed.</p>
