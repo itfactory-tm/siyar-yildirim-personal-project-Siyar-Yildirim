@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Helpers\Cart;
 use App\Models\Product;
 use App\Models\Category;
 use Livewire\Attributes\Layout;
@@ -40,6 +41,12 @@ class Shop extends Component
         $this->priceMin = ceil(Product::min('price'));
         $this->priceMax = ceil(Product::max('price'));
         $this->price    = $this->priceMax;
+    }
+
+    public function addToBasket(Product $product)
+    {
+        Cart::add($product);
+        $this->dispatch('basket-updated');
     }
 
     #[Layout('layouts.earthify', ['title' => 'Shop', 'description' => 'Browse our durable goods'])]

@@ -18,7 +18,7 @@ class Cart
         self::$cart = session()->get('cart') ?? self::$cart;
     }
 
-    // add record to the cart
+    // add product to the cart
     public static function add(Product $product): void
     {
         $singlePrice = $product->price;
@@ -31,7 +31,9 @@ class Cart
                 'name' => $product->name,
                 'description' => $product->description,
                 'price' => $singlePrice,
-                'qty' => 1
+                'qty' => 1,
+                'image' => $product->image,
+
             ];
         }
         self::updateTotal();
@@ -82,7 +84,7 @@ class Cart
         return self::$cart['products'];
     }
 
-    // get one record from the cart
+    // get one product from the cart
     public static function getOneProduct($key = 0): array
     {
         if (array_key_exists($key, self::$cart['products'])) {
@@ -91,13 +93,13 @@ class Cart
         return [];
     }
 
-    // get all the record keys
+    // get all the product keys
     public static function getKeys(): array
     {
         return array_keys(self::$cart['products']);
     }
 
-    // get total quantity of records in the cart
+    // get total quantity of products in the cart
     public static function getTotalQty(): int
     {
         return self::$cart['totalQty'];

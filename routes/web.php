@@ -5,6 +5,7 @@ use App\Http\Middleware\Admin;
 use App\Livewire\Admin\Categories;
 use App\Livewire\Admin\Products;
 use App\Livewire\Admin\Users;
+use App\Livewire\Basket;
 use App\Livewire\Shop;
 
 use Illuminate\Support\Facades\Route;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'home')->name('home');
 Route::view('contact', 'contact')->name('contact');
 Route::get('shop', Shop::class)->name('shop');
+Route::get('basket', Basket::class)->name('basket');
 
 Route::middleware(['auth', Admin::class, ActiveUser::class])->prefix('admin')->name('admin.')->group(function () {
     Route::redirect('/', '/admin/products');

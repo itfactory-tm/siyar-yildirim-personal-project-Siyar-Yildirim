@@ -27,8 +27,13 @@
                 </div>
             </div>
 
+
+
             <!-- Secondary Menu (Cart + User) -->
             <div class="hidden sm:flex sm:items-center gap-4">
+                {{-- shopping cart --}}
+                @livewire('partials.mini-basket')
+
                 <!-- User Dropdown -->
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">

@@ -78,9 +78,9 @@
                         <h3 class="text-sm font-medium text-gray-900 mb-4">Price Range</h3>
                         <div class="space-y-4">
                             <div class="flex items-center justify-between text-sm">
-                                <span class="text-gray-500">{{ $priceMin }}€</span>
-                                <span class="font-medium text-gray-900">{{ $price }}€</span>
-                                <span class="text-gray-500">{{ $priceMax }}€</span>
+                                <span class="text-gray-500">{{ $priceMin }}$</span>
+                                <span class="font-medium text-gray-900">{{ $price }}$</span>
+                                <span class="text-gray-500">{{ $priceMax }}$</span>
                             </div>
                             <input
                                 type="range"
@@ -151,7 +151,7 @@
 
                             {{-- Price --}}
                             <div>
-                                <label class="block text-sm font-medium text-gray-700">Max price: {{ $price }}€</label>
+                                <label class="block text-sm font-medium text-gray-700">Max price: {{ $price }}$</label>
                                 <input
                                     type="range"
                                     wire:model.live.debounce.500ms="price"
@@ -206,7 +206,7 @@
 
                                     @if($price < $priceMax)
                                         <span class="inline-flex items-center gap-x-0.5 rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
-                                            Max {{ $price }}€
+                                            Max {{ $price }}$
                                             <button type="button" wire:click="$set('price', {{ $priceMax }})" class="group -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-gray-500/20 relative">
                                                 <svg viewBox="0 0 14 14" class="h-3.5 w-3.5 stroke-gray-600/50 group-hover:stroke-gray-600/75"><path d="M4 4l6 6m0-6l-6 6"/></svg>
                                             </button>
@@ -221,7 +221,6 @@
                     <div class="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8">
                         @forelse ($products as $product)
                             <div wire:key="product-{{ $product->id }}" class="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white">
-                                {{-- Image: object-contain, geen zoom --}}
                                 <div class=" bg-white flex items-center justify-center">
                                     @if ($product->image)
                                         <img
@@ -250,7 +249,7 @@
                                     </h3>
                                     <p class="text-sm text-gray-500">{{ $product->category->name ?? 'Uncategorized' }}</p>
                                     <div class="flex flex-1 flex-col justify-end">
-                                        <p class="text-base font-medium text-gray-900">{{ number_format($product->price, 2) }}€</p>
+                                        <p class="text-base font-medium text-gray-900">{{ number_format($product->price, 2) }}$</p>
                                     </div>
                                 </div>
                             </div>
@@ -360,7 +359,7 @@
                     {{-- Price --}}
                     <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
                         <span class="text-base text-gray-900">Price</span>
-                        <span class="text-2xl font-semibold text-gray-900">{{ number_format($selectedProduct->price, 2) }}€</span>
+                        <span class="text-2xl font-semibold text-gray-900">{{ number_format($selectedProduct->price, 2) }}$</span>
                     </div>
                 </div>
             @endif
@@ -374,17 +373,25 @@
                     class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                 >Close</button>
 
-                <div class="flex items-center gap-x-3">
-                    <button
-                        type="button"
-                        class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                    >Add to Cart</button>
+                @if($selectedProduct && $selectedProduct->stock > 0)
+                    <div class="flex items-center gap-x-3">
+                        <button
+                            type="button"
+                            class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                            wire:click="addToBasket({{ $selectedProduct->id }})"
+                            data-tippy-content="Add to basket"
+                        >Add to Cart</button>
 
-                    <button
-                        type="button"
-                        class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    >Buy Now</button>
-                </div>
+                        <button
+                            type="button"
+                            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500"
+                            wire:click="addToBasket({{ $selectedProduct->id }})"
+                            data-tippy-content="Add to basket"
+                        >Buy Now</button>
+                    </div>
+                @else
+                    <p class="font-extrabold text-red-700">SOLD OUT</p>
+                @endif
             </div>
         </x-slot>
     </x-dialog-modal>
