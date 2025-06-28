@@ -5,6 +5,7 @@ use App\Http\Middleware\Admin;
 use App\Livewire\Admin\Categories;
 use App\Livewire\Admin\Orders;
 use App\Livewire\Admin\Products;
+use App\Livewire\Admin\Suppliers;
 use App\Livewire\Admin\Users;
 use App\Livewire\Basket;
 use App\Livewire\Shop;
@@ -23,8 +24,7 @@ Route::middleware(['auth', Admin::class, ActiveUser::class])->prefix('admin')->n
     Route::get('products', Products::class)->name('products');
     Route::get('users', Users::class)->name('users');
     Route::get('orders', Orders::class)->name('orders');
-
-
+    Route::get('suppliers', Suppliers::class)->name('suppliers');
 });
 
 Route::middleware(['auth', ActiveUser::class])->prefix('user')->name('user.')->group(function () {

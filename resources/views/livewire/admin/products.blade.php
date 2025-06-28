@@ -70,6 +70,23 @@
         </div>
     </x-tmk.section>
 
+    {{-- Error/Success Messages --}}
+    @if (session()->has('error'))
+        <x-tmk.section class="mb-4">
+            <x-tmk.alert type="danger">
+                {{ session('error') }}
+            </x-tmk.alert>
+        </x-tmk.section>
+    @endif
+
+    @if (session()->has('success'))
+        <x-tmk.section class="mb-4">
+            <x-tmk.alert type="success">
+                {{ session('success') }}
+            </x-tmk.alert>
+        </x-tmk.section>
+    @endif
+
     {{-- Products Table Section --}}
     <x-tmk.section padding="py-6">
         {{-- Table Header with Pagination Controls --}}
@@ -197,8 +214,7 @@
                                     @endif
                                 </p>
                                 @if(!$search)
-                                    <div class="mt-6"><x-tmk.button color="primary" wire:click="newProduct"
-                                            icon='<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>'>
+                                    <div class="mt-6"><x-tmk.button color="primary" wire:click="newProduct">
                                             Add Product
                                         </x-tmk.button>
                                     </div>

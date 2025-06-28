@@ -16,4 +16,11 @@ class Category extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    public function hasOrders()
+    {
+        return $this->products()
+            ->whereHas('orderLines')
+            ->exists();
+    }
 }

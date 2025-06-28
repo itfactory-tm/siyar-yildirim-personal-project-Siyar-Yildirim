@@ -60,6 +60,13 @@ class Categories extends Component
 
     public function delete(Category $category)
     {
+        // Check if category has products with orders
+        if ($category->hasOrders()) {
+            $this->addError('delete', 'Cannot delete this category because it contains products that have been ordered. This category must be preserved for order history.');
+            return;
+        }
+
+        // Existing check for products
         if ($category->products()->count() > 0) {
             $this->addError('delete', 'Cannot delete this category because it contains ' . $category->products()->count() . ' product(s). Please delete all products from this category first.');
             return;

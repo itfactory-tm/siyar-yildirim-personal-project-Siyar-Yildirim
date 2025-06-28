@@ -51,6 +51,12 @@ class Products extends Component
 
     public function confirmDelete(Product $product)
     {
+        // Check if product has been ordered
+        if ($product->hasOrders()) {
+            session()->flash('error', 'Cannot delete this product because it has been ordered. This product must be preserved for order history.');
+            return;
+        }
+
         $this->productToDelete = $product;
         $this->showDeleteModal = true;
     }
@@ -58,7 +64,16 @@ class Products extends Component
     public function deleteProduct()
     {
         if ($this->productToDelete) {
+            // Double-check before deletion
+            if ($this->productToDelete->hasOrders()) {
+                session()->flash('error', 'Cannot delete this product because it has been ordered.');
+                $this->showDeleteModal = false;
+                $this->productToDelete = null;
+                return;
+            }
+
             $this->productToDelete->delete();
+            session()->flash('success', 'Product deleted successfully.');
             $this->productToDelete = null;
         }
         $this->showDeleteModal = false;

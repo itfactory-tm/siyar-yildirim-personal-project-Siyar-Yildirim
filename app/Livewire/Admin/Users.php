@@ -178,10 +178,12 @@ class Users extends Component
                 $q->where('admin', true);
             });
 
-        // Sorting
         if ($this->sortField === 'admin' || $this->sortField === 'active') {
-            $query->orderBy($this->sortField, 'desc')->orderBy('name', 'asc');
+            // For boolean fields, apply the user's chosen direction and add name as secondary sort
+            $query->orderBy($this->sortField, $this->sortDirection)
+                ->orderBy('name', 'asc');
         } else {
+            // For other fields, use the user's chosen direction
             $query->orderBy($this->sortField, $this->sortDirection);
         }
 

@@ -69,6 +69,9 @@
                                 <x-dropdown-link :href="route('admin.categories')">
                                     {{ __('Categories') }}
                                 </x-dropdown-link>
+                                <x-dropdown-link :href="route('admin.suppliers')">
+                                    {{ __('Suppliers') }}
+                                </x-dropdown-link>
                                 <div class="border-t border-gray-100"></div>
                                 <x-dropdown-link :href="route('admin.users')">
                                     {{ __('Users') }}

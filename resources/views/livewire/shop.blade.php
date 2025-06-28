@@ -11,7 +11,7 @@
     </div>
 
     <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-        {{-- Header ----------------------------------------------------------- --}}
+        {{-- Header --}}
         <div class="border-b border-gray-200 pb-10">
             <h1 class="text-4xl font-bold tracking-tight text-gray-900">Products</h1>
             <p class="mt-4 text-base text-gray-500">
@@ -19,10 +19,10 @@
             </p>
         </div>
 
-        {{-- Filters ---------------------------------------------------------- --}}
+        {{-- Filters --}}
         <div class="pt-12 pb-6">
             <div class="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
-                {{-- Sidebar (desktop) --------------------------------------- --}}
+                {{-- Sidebar (desktop) --}}
                 <div class="hidden lg:block">
                     <h3 class="text-lg font-medium text-gray-900 mb-6">Filters</h3>
 
@@ -51,8 +51,7 @@
                                     value="%"
                                     type="radio"
                                     wire:model.live="category"
-                                    class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                />
+                                    class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"/>
                                 <label for="category-all" class="ml-3 text-sm text-gray-600">All Categories</label>
                             </div>
                             @foreach ($allCategories as $cat)
@@ -217,39 +216,54 @@
                         </div>
                     @endif
 
-                    {{-- Grid ------------------------------------------------ --}}
-                    <div class="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8">
+                    {{-- Grid met gematigde verkleining --}}
+                    <div class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-8 lg:grid-cols-3 lg:gap-x-6">
                         @forelse ($products as $product)
-                            <div wire:key="product-{{ $product->id }}" class="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white">
-                                <div class=" bg-white flex items-center justify-center">
+                            <div wire:key="product-{{ $product->id }}"
+                                 class="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white cursor-pointer hover:shadow-lg transition-shadow duration-200"
+                                 wire:click="showProduct({{ $product->id }})">
+
+                                <div class="bg-white flex items-center justify-center aspect-square">
                                     @if ($product->image)
                                         <img
                                             src="{{ asset('storage/'.$product->image) }}"
                                             alt="{{ $product->name }}"
                                             loading="lazy"
-                                            class="h-full w-full object-cover object-center"
+                                            class="h-full w-full object-cover object-center group-hover:opacity-90 transition-opacity"
                                         />
                                     @else
-                                        <div class="flex items-center justify-center h-full w-full bg-gray-100 text-gray-400">
+                                        <div class="flex items-center justify-center h-full w-full bg-gray-100 text-gray-400 group-hover:bg-gray-200 transition-colors">
                                             <svg class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                                 <path d="M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"/>
                                                 <path d="M21 15l-5.5-5.5L11 14l-3-3L3 16"/>
                                             </svg>
                                         </div>
                                     @endif
+
+                                    {{-- Hover overlay --}}
+                                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-5 transition-all duration-200 flex items-center justify-center">
+                                        <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-white rounded-full p-2 shadow-lg">
+                                            <svg class="h-5 w-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                            </svg>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 {{-- Details --}}
-                                <div class="flex flex-1 flex-col space-y-2 p-4">
-                                    <h3 class="text-sm font-medium text-gray-900">
-                                        <a href="#" wire:click.prevent="showProduct({{ $product->id }})" class="relative">
-                                            <span aria-hidden="true" class="absolute inset-0"></span>
-                                            {{ $product->name }}
-                                        </a>
+                                <div class="flex flex-1 flex-col space-y-2 p-3">
+                                    <h3 class="text-sm font-medium text-gray-900 group-hover:text-indigo-600 transition-colors">
+                                        {{ $product->name }}
                                     </h3>
                                     <p class="text-sm text-gray-500">{{ $product->category->name ?? 'Uncategorized' }}</p>
                                     <div class="flex flex-1 flex-col justify-end">
-                                        <p class="text-base font-medium text-gray-900">{{ number_format($product->price, 2) }}$</p>
+                                        <div class="flex items-center justify-between">
+                                            <p class="text-base font-medium text-gray-900">{{ number_format($product->price, 2) }}$</p>
+                                            @if($product->stock <= 0)
+                                                <span class="text-xs font-semibold text-red-600 bg-red-50 px-2 py-1 rounded">Uitverkocht</span>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -302,7 +316,7 @@
                                             class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
                                         >Next</button>
                                     @else
-                                        <span class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-300">Next</span>
+                                        <span class="relative ml-3 inline-flex items-centers rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-300">Next</span>
                                     @endif
                                 </div>
 
@@ -336,25 +350,52 @@
         <x-slot name="content">
             @if($selectedProduct)
                 <div class="space-y-6">
-                    {{-- Image: object-contain --}}
-                    <div class=" bg-white flex items-center justify-center rounded-lg">
+                    {{-- Image --}}
+                    <div class="bg-white flex items-center justify-center rounded-lg">
                         <img
                             src="{{ $selectedProduct->image ? asset('storage/'.$selectedProduct->image) : asset('images/placeholder.svg') }}"
                             alt="{{ $selectedProduct->name }}"
-                            class="h-full w-full object-cover object-center"
+                            class="h-80 w-full object-cover object-center rounded-lg"
                         />
                     </div>
 
                     {{-- Category --}}
                     <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
-                        {{ $selectedProduct->category->name ?? 'Uncategorized' }}
-                    </span>
+                    {{ $selectedProduct->category->name ?? 'Uncategorized' }}
+                </span>
 
                     {{-- Description --}}
                     <div>
                         <h3 class="text-sm font-medium text-gray-900 mb-2">Description</h3>
                         <p class="text-sm text-gray-600">{{ $selectedProduct->description }}</p>
                     </div>
+
+                    {{-- Stock Status --}}
+                    @if($selectedProduct->stock <= 0)
+                        <div class="bg-red-50 border border-red-200 rounded-md p-3">
+                            <div class="flex">
+                                <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                </svg>
+                                <div class="ml-3">
+                                    <h3 class="text-sm font-medium text-red-800">Sold out</h3>
+                                    <p class="mt-1 text-sm text-red-700">This product is currently not available.</p>
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        <div class="bg-green-50 border border-green-200 rounded-md p-3">
+                            <div class="flex">
+                                <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                <div class="ml-3">
+                                    <h3 class="text-sm font-medium text-green-800">In stock</h3>
+                                    <p class="mt-1 text-sm text-green-700">{{ $selectedProduct->stock }} pieces available</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
 
                     {{-- Price --}}
                     <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
@@ -374,23 +415,11 @@
                 >Close</button>
 
                 @if($selectedProduct && $selectedProduct->stock > 0)
-                    <div class="flex items-center gap-x-3">
-                        <button
-                            type="button"
-                            class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                            wire:click="addToBasket({{ $selectedProduct->id }})"
-                            data-tippy-content="Add to basket"
-                        >Add to Cart</button>
-
-                        <button
-                            type="button"
-                            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500"
-                            wire:click="addToBasket({{ $selectedProduct->id }})"
-                            data-tippy-content="Add to basket"
-                        >Buy Now</button>
-                    </div>
-                @else
-                    <p class="font-extrabold text-red-700">SOLD OUT</p>
+                    <button
+                        type="button"
+                        class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        wire:click="addToBasket({{ $selectedProduct->id }})"
+                    >Add to cart</button>
                 @endif
             </div>
         </x-slot>

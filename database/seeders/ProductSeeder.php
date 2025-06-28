@@ -47,7 +47,7 @@ class ProductSeeder extends Seeder
                     'name'        => 'Rechargeable AA Battery Pack',
                     'description' => '4-pack Ni-MH cells plus USB charger.',
                     'price'       => 17.80,
-                    'stock'       => 35,
+                    'stock'       => 0,
                     'image'       => 'products/battery.jpg',
                     'created_at'  => now(),
                 ],
