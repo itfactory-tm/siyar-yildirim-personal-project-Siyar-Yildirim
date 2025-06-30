@@ -9,10 +9,12 @@ use App\Models\Supplier;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 class Products extends Component
 {
-    use WithPagination;
+    use WithPagination, WithFileUploads;
 
     public $search;
     public $perPage = 15;
@@ -46,7 +48,12 @@ class Products extends Component
     {
         $this->form->create();
         $this->showModal = false;
+    }
 
+    public function removeImage()
+    {
+        $this->form->imageUpload = null;
+        $this->form->image = null;
     }
 
     public function confirmDelete(Product $product)
@@ -70,6 +77,11 @@ class Products extends Component
                 $this->showDeleteModal = false;
                 $this->productToDelete = null;
                 return;
+            }
+
+            // Delete image if exists
+            if ($this->productToDelete->image && Storage::disk('public')->exists($this->productToDelete->image)) {
+                Storage::disk('public')->delete($this->productToDelete->image);
             }
 
             $this->productToDelete->delete();

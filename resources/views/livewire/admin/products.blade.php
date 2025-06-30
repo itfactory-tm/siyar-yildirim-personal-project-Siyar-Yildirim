@@ -10,7 +10,7 @@
             <div class="flex flex-col sm:flex-row gap-3">
                 <div class="min-w-80">
                     <x-tmk.form.search placeholder="Search products by name..." wire:model.live.debounce.1000ms="search"
-                        size="md" variant="filled" clearable="true" icon="true"/>
+                                       size="md" variant="filled" clearable="true" icon="true"/>
                 </div>
 
                 <x-tmk.form.button variant="primary" size="md" wire:click="newProduct">New Product</x-tmk.form.button>
@@ -87,7 +87,7 @@
                 <div class="flex items-center gap-2">
                     <label for="perPage" class="text-sm text-gray-600">Show:</label>
                     <x-tmk.form.select id="perPage" wire:model.live="perPage" variant="outline"
-                        size="sm" class="w-20" :options="[5 => '5', 10 => '10', 15 => '15', 20 => '20', 50 => '50']"/>
+                                       size="sm" class="w-20" :options="[5 => '5', 10 => '10', 15 => '15', 20 => '20', 50 => '50']"/>
                     <span class="text-sm text-gray-600">entries</span>
                 </div>
             </div>
@@ -126,9 +126,14 @@
                         <td class="px-6 py-4">
                             <div class="flex items-center">
                                 <div class="h-12 w-12 flex-shrink-0">
-                                    <div class="h-12 w-12 rounded-lg bg-gradient-to-br from-black to-gray-50 flex items-center justify-center">
-                                        <span class="text-white font-semibold text-lg">{{ $product->name ? substr($product->name, 0, 1) : '?' }}</span>
-                                    </div>
+                                    @if($product->image)
+                                        <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}"
+                                             class="h-12 w-12 rounded-lg object-cover">
+                                    @else
+                                        <div class="h-12 w-12 rounded-lg bg-gradient-to-br from-black to-gray-50 flex items-center justify-center">
+                                            <span class="text-white font-semibold text-lg">{{ $product->name ? substr($product->name, 0, 1) : '?' }}</span>
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900">{{ $product->name }}</div>
@@ -245,6 +250,123 @@
             <x-tmk.error-bag />
 
             <div class="space-y-6 mt-6">
+                {{-- Product Image Upload with Drag & Drop --}}
+                <div x-data="{
+                    isDragging: false,
+                    hasImage: @entangle('form.imageUpload').defer || @entangle('form.image').defer,
+                    imagePreview: null,
+                    handleDrop(e) {
+                        if (e.dataTransfer.files.length > 0) {
+                            const file = e.dataTransfer.files[0];
+                            if (file.type.startsWith('image/')) {
+                                @this.upload('form.imageUpload', file,
+                                    (uploadedFilename) => {
+                                        // Success callback
+                                    },
+                                    () => {
+                                        // Error callback
+                                        alert('Error uploading image. Please try again.');
+                                    },
+                                    (event) => {
+                                        // Progress callback
+                                    }
+                                );
+                                this.previewImage(file);
+                            } else {
+                                alert('Please upload an image file');
+                            }
+                        }
+                        this.isDragging = false;
+                    },
+                    previewImage(file) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            this.imagePreview = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                }">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Product Image</label>
+
+                    {{-- Drag & Drop Zone --}}
+                    <div
+                        x-on:dragover.prevent="isDragging = true"
+                        x-on:dragleave.prevent="isDragging = false"
+                        x-on:drop.prevent="handleDrop($event)"
+                        :class="{ 'border-blue-500 bg-blue-50': isDragging, 'border-gray-300': !isDragging }"
+                        class="relative border-2 border-dashed rounded-lg p-6 transition-colors duration-200"
+                    >
+                        {{-- Preview existing or uploaded image --}}
+                        <div x-show="hasImage || imagePreview" class="mb-4">
+                            <div class="relative inline-block">
+                                <img
+                                    x-show="imagePreview"
+                                    :src="imagePreview"
+                                    class="h-32 w-32 object-cover rounded-lg"
+                                >
+                                @if($form->image && !$form->imageUpload)
+                                    <img
+                                        x-show="!imagePreview && '{{ $form->image }}'"
+                                        src="{{ Storage::url($form->image) }}"
+                                        class="h-32 w-32 object-cover rounded-lg"
+                                    >
+                                @endif
+                                @if($form->imageUpload)
+                                    <img
+                                        x-show="!imagePreview"
+                                        src="{{ $form->imageUpload->temporaryUrl() }}"
+                                        class="h-32 w-32 object-cover rounded-lg"
+                                    >
+                                @endif
+                                <button
+                                    type="button"
+                                    wire:click="removeImage"
+                                    @click="imagePreview = null; hasImage = false"
+                                    class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
+                                >
+                                    <x-phosphor-x class="w-4 h-4" />
+                                </button>
+                            </div>
+                        </div>
+
+                        {{-- Upload instructions --}}
+                        <div x-show="!hasImage && !imagePreview" class="text-center">
+                            <x-phosphor-image class="mx-auto h-12 w-12 text-gray-400" />
+                            <div class="mt-4">
+                                <label for="file-upload" class="relative cursor-pointer rounded-md font-medium text-blue-600 hover:text-blue-500">
+                                    <span>Upload a file</span>
+                                    <input
+                                        id="file-upload"
+                                        wire:model="form.imageUpload"
+                                        type="file"
+                                        class="sr-only"
+                                        accept="image/*"
+                                        @change="if($event.target.files.length > 0) previewImage($event.target.files[0])"
+                                    >
+                                </label>
+                                <p class="pl-1 text-gray-600">or drag and drop</p>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2">PNG, JPG, GIF up to 2MB</p>
+                        </div>
+
+                        {{-- Loading state --}}
+                        <div wire:loading wire:target="form.imageUpload" class="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center rounded-lg">
+                            <div class="text-center">
+                                <svg class="animate-spin h-8 w-8 text-blue-600 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                <p class="mt-2 text-sm text-gray-600">Uploading...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Image upload error --}}
+                    @error('form.imageUpload')
+                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
                 {{-- Product Name --}}
                 <div>
                     <x-label for="name" value="Product Name" class="text-sm font-medium text-gray-700" />
@@ -312,13 +434,15 @@
                 </x-tmk.form.button>
 
                 @if(is_null($form->id))
-                    <x-tmk.form.button variant="success" wire:click="createProduct" loading="{{ $loading ?? false }}">
-                        Create Product
+                    <x-tmk.form.button variant="success" wire:click="createProduct" wire:loading.attr="disabled">
+                        <span wire:loading.remove wire:target="createProduct">Create Product</span>
+                        <span wire:loading wire:target="createProduct">Creating...</span>
                     </x-tmk.form.button>
                 @else
-                    <x-tmk.form.button variant="primary" wire:click="updateRecord({{ $form->id }})" loading="{{ $loading ?? false }}">
+                    <x-tmk.form.button variant="primary" wire:click="updateRecord({{ $form->id }})" wire:loading.attr="disabled">
                         <x-phosphor-check class="w-4 h-4 mr-2 text-current" />
-                        Save Changes
+                        <span wire:loading.remove wire:target="updateRecord">Save Changes</span>
+                        <span wire:loading wire:target="updateRecord">Saving...</span>
                     </x-tmk.form.button>
                 @endif
             </div>
@@ -349,6 +473,12 @@
                             <p><span class="font-medium">Name:</span> {{ $productToDelete->name }}</p>
                             <p><span class="font-medium">Price:</span> ${{ number_format($productToDelete->price, 2) }}</p>
                             <p><span class="font-medium">Stock:</span> {{ $productToDelete->stock }} units</p>
+                            @if($productToDelete->image)
+                                <div class="mt-3">
+                                    <span class="font-medium">Image:</span>
+                                    <img src="{{ Storage::url($productToDelete->image) }}" alt="{{ $productToDelete->name }}" class="mt-2 h-20 w-20 object-cover rounded-lg">
+                                </div>
+                            @endif
                         </div>
                     </div>
                 @endif
@@ -365,9 +495,10 @@
                     Cancel
                 </x-tmk.form.button>
 
-                <x-tmk.form.button variant="danger" wire:click="deleteProduct" wire:loading.attr="disabled" loading="{{ $loading ?? false }}">
+                <x-tmk.form.button variant="danger" wire:click="deleteProduct" wire:loading.attr="disabled">
                     <x-phosphor-trash class="w-4 h-4 mr-2 text-current" />
-                    Delete Product
+                    <span wire:loading.remove wire:target="deleteProduct">Delete Product</span>
+                    <span wire:loading wire:target="deleteProduct">Deleting...</span>
                 </x-tmk.form.button>
             </div>
         </x-slot>
