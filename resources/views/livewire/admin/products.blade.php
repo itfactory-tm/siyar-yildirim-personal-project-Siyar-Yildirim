@@ -503,4 +503,7 @@
             </div>
         </x-slot>
     </x-confirmation-modal>
+    <script>
+        window.addEventListener('refresh-page', () => window.location.reload());
+    </script>
 </div>
