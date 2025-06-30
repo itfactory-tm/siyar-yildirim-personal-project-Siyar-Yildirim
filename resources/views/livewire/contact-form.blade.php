@@ -41,10 +41,7 @@
         </div>
 
         <div class="col-span-2">
-            <x-tmk.form.button type="submit"
-                               :disabled="!$canSubmit"
-                               color="primary"
-                               class="w-full col-span-2">
+            <x-tmk.form.button type="submit" :disabled="!$canSubmit" color="primary" class="w-full col-span-2">
                 Send Message
             </x-tmk.form.button>
         </div>
