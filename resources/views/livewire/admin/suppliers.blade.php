@@ -45,8 +45,6 @@
                     Add Supplier
                 </button>
             </div>
-            <x-heroicon-o-information-circle
-                class="w-5 text-gray-400 cursor-help outline-0 flex-shrink-0"/>
         </div>
 
         {{-- Display delete error if any --}}

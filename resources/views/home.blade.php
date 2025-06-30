@@ -71,4 +71,6 @@
             </div>
         </div>
     </section>
+
+    @livewire('featured-products', [ 'limit' => 3, 'title' => 'Featured Sustainable Products' ])
 </x-earthify-layout>

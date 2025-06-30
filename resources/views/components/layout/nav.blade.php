@@ -25,8 +25,6 @@
                 </div>
             </div>
 
-
-
             <!-- Secondary Menu (Cart + User) -->
             <div class="hidden sm:flex sm:items-center gap-4">
                 {{-- shopping cart --}}
@@ -60,7 +58,7 @@
                                 <div class="block px-4 py-2 text-xs text-gray-400">Admin</div>
 
                                 <x-dropdown-link :href="route('admin.products')">
-                                {{ __('Products') }}
+                                    {{ __('Products') }}
                                 </x-dropdown-link>
                                 <x-dropdown-link :href="route('admin.categories')">
                                     {{ __('Categories') }}
@@ -106,9 +104,19 @@
             <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="block pl-3 pr-4 text-base">
                 {{ __('Home') }}
             </x-nav-link>
+            <x-nav-link :href="route('shop')" :active="request()->routeIs('shop')" class="block pl-3 pr-4 text-base">
+                {{ __('Shop') }}
+            </x-nav-link>
             <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')" class="block pl-3 pr-4 text-base">
                 {{ __('Contact') }}
             </x-nav-link>
+        </div>
+
+        <!-- Mobile Shopping Cart -->
+        <div class="pt-2 pb-3 border-t border-gray-200">
+            <div class="px-4">
+                @livewire('partials.mini-basket')
+            </div>
         </div>
 
         <!-- Mobile User Options -->
@@ -121,6 +129,29 @@
                 <x-nav-link :href="route('profile.show')" class="block pl-3 pr-4 text-base">
                     {{ __('Profile') }}
                 </x-nav-link>
+                <x-nav-link :href="route('user.history')" class="block pl-3 pr-4 text-base">
+                    {{ __('History') }}
+                </x-nav-link>
+
+                @if(auth()->user()->admin)
+                    <div class="px-4 py-2 text-xs text-gray-400 mt-3">Admin</div>
+                    <x-nav-link :href="route('admin.products')" class="block pl-3 pr-4 text-base">
+                        {{ __('Products') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.categories')" class="block pl-3 pr-4 text-base">
+                        {{ __('Categories') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.suppliers')" class="block pl-3 pr-4 text-base">
+                        {{ __('Suppliers') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.users')" class="block pl-3 pr-4 text-base">
+                        {{ __('Users') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.orders')" class="block pl-3 pr-4 text-base">
+                        {{ __('Orders') }}
+                    </x-nav-link>
+                @endif
+
                 <form method="POST" action="{{ route('logout') }}" class="px-4 mt-3" x-data>
                     @csrf
                     <x-nav-link :href="route('logout')" @click.prevent="$root.submit();" class="block pl-3 pr-4 text-base">

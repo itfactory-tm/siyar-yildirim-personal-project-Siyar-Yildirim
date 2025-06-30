@@ -24,7 +24,6 @@
     @guest
         <x-tmk.alert type="warning" class="w-full rounded-xl shadow-md bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200" dismissible="false">
             <div class="flex items-center space-x-3">
-                <x-phosphor-warning class="w-6 h-6 text-amber-600 flex-shrink-0" />
                 <span class="text-amber-800">
                     You're not logged in. Please
                     <a href="{{ route('login') }}" class="font-semibold underline hover:text-amber-900 transition-colors">login</a> or

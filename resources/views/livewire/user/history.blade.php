@@ -52,7 +52,6 @@
             <div class="p-4 bg-gradient-to-r from-gray-50 to-slate-50 border-t border-gray-200">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center gap-2">
-                        <x-phosphor-calendar class="w-5 h-5 text-gray-600" />
                         <span class="text-lg font-semibold text-gray-800">Total</span>
                     </div>
                     <span class="text-2xl font-bold text-green-600">$ {{ number_format($order->total_price, 2) }}</span>

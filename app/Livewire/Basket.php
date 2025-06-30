@@ -22,12 +22,6 @@ class Basket extends Component
         $this->form->reset();
         $this->resetErrorBag();
         $this->showModal = true;
-        // for debugging only
-        $this->form->address = 'Kleinhoestraat 4';
-        $this->form->city = 'Geel';
-        $this->form->zip = '2440';
-        $this->form->country = 'Belgium';
-        $this->form->notes = "Please leave the package at the back door.\nThank you.";
     }
 
     public function checkout()
@@ -56,12 +50,9 @@ class Basket extends Component
                 'quantity' => $product['qty'],
             ]);
 
-
             // update the stock
             $updateQty = Product::findOrFail($product['id']);
-            $updateQty->stock > $product['qty']
-                ? $updateQty->stock -= $product['qty']
-                : $updateQty->stock = 0;
+            $updateQty->stock > $product['qty'] ? $updateQty->stock -= $product['qty'] : $updateQty->stock = 0;
             $updateQty->save();
         }
 
@@ -75,7 +66,6 @@ class Basket extends Component
         // empty the cart
         Cart::empty();
         $this->dispatch('basket-updated');
-        // show a confirmation message
     }
 
     public function emptyBasket()

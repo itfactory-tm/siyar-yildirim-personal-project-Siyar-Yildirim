@@ -1,3 +1,11 @@
+## Accounts:
+
+| Name          | Email                         | Password        | Role  |
+|---------------|-------------------------------|-----------------|-------|
+| John Doe      | john.doe@example.com          | `admin1234`     | admin |
+| Jane Doe      | jane.doe@example.com          | `user1234`      | user  |
+
+
 # Laravel 11 - starter project
 
 - Clone this repository to the folder **C:\Sites_laravel**
