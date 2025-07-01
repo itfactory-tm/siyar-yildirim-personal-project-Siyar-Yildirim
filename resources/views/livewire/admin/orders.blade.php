@@ -80,9 +80,6 @@
                         <h3 class="text-xl font-semibold text-gray-900 mb-2">No Orders Found</h3>
                         <p class="text-gray-600 max-w-md mx-auto">There are no orders to display at the moment. New orders will appear here once they're placed.</p>
                     </div>
-                    <!-- Decorative background elements -->
-                    <div class="absolute top-0 left-0 w-32 h-32 bg-blue-200 rounded-full opacity-20 -translate-x-16 -translate-y-16"></div>
-                    <div class="absolute bottom-0 right-0 w-24 h-24 bg-indigo-200 rounded-full opacity-20 translate-x-12 translate-y-12"></div>
                 </div>
             </div>
         @endforelse

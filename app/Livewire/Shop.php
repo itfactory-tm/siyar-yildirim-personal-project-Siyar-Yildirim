@@ -47,6 +47,7 @@ class Shop extends Component
     {
         Cart::add($product);
         $this->dispatch('basket-updated');
+        $this->showModal = false;
     }
 
     #[Layout('layouts.earthify', ['title' => 'Shop', 'description' => 'Browse our durable goods'])]

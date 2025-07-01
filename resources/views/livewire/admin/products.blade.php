@@ -255,6 +255,20 @@
                     isDragging: false,
                     hasImage: @entangle('form.imageUpload').defer || @entangle('form.image').defer,
                     imagePreview: null,
+
+                    init() {
+                        // Listen for reset event from Livewire
+                        this.$wire.on('reset-image-preview', () => {
+                            this.resetImageState();
+                        });
+                    },
+
+                    resetImageState() {
+                        this.imagePreview = null;
+                        this.hasImage = @entangle('form.imageUpload').defer || @entangle('form.image').defer;
+                        this.isDragging = false;
+                    },
+
                     handleDrop(e) {
                         if (e.dataTransfer.files.length > 0) {
                             const file = e.dataTransfer.files[0];
@@ -278,6 +292,7 @@
                         }
                         this.isDragging = false;
                     },
+
                     previewImage(file) {
                         const reader = new FileReader();
                         reader.onload = (e) => {
@@ -429,7 +444,7 @@
 
         <x-slot name="footer">
             <div class="flex justify-end space-x-3">
-                <x-tmk.form.button variant="secondary" @click="$wire.showModal = false">
+                <x-tmk.form.button variant="secondary" wire:click="closeModal">
                     Cancel
                 </x-tmk.form.button>
 
@@ -449,7 +464,7 @@
         </x-slot>
     </x-dialog-modal>
 
-    {{-- Enhanced Delete Confirmation Modal --}}
+    {{-- Delete Confirmation Modal --}}
     <x-confirmation-modal wire:model.live="showDeleteModal">
         <x-slot name="title">
             <div class="flex items-center">

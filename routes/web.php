@@ -33,7 +33,7 @@ Route::middleware(['auth', ActiveUser::class])->prefix('user')->name('user.')->g
 });
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified', ActiveUser::class,])->group(function () {
-    Route::get('/', function () {
-        return view('home');
-    })->name('home');
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 });

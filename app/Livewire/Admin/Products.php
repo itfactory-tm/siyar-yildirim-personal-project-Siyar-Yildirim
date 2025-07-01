@@ -29,6 +29,9 @@ class Products extends Component
         $this->form->reset();
         $this->resetErrorBag();
         $this->showModal = true;
+
+        // Dispatch event to reset Alpine.js image state
+        $this->dispatch('reset-image-preview');
     }
 
     public function editRecord(Product $product)
@@ -36,24 +39,40 @@ class Products extends Component
         $this->resetErrorBag();
         $this->form->fill($product);
         $this->showModal = true;
+
+        // Dispatch event to reset Alpine.js image state
+        $this->dispatch('reset-image-preview');
     }
 
     public function updateRecord(Product $product)
     {
         $this->form->update($product);
         $this->showModal = false;
+
+        // Dispatch event to reset Alpine.js image state after closing
+        $this->dispatch('reset-image-preview');
     }
 
     public function createProduct()
     {
         $this->form->create();
         $this->showModal = false;
+
+        // Dispatch event to reset Alpine.js image state after closing
+        $this->dispatch('reset-image-preview');
     }
 
     public function removeImage()
     {
         $this->form->imageUpload = null;
         $this->form->image = null;
+    }
+
+    // Add method to handle modal closing
+    public function closeModal()
+    {
+        $this->showModal = false;
+        $this->dispatch('reset-image-preview');
     }
 
     public function confirmDelete(Product $product)
