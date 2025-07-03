@@ -28,7 +28,7 @@ class Product extends Model
     /** A product appears in many order lines */
     public function orderLines()
     {
-        return $this->hasMany(OrderLine::class);
+        return $this->hasMany(Orderline::class);
     }
 
     /** Check if the product has been ordered */

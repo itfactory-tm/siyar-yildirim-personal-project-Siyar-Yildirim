@@ -37,10 +37,6 @@ class ShippingForm extends Form
             'backorder' => $backorder,
         ];
 
-        $admins = User::where('admin', true)->select('name', 'email')->get();
-        Mail::to(auth()->user())
-            ->cc($admins)
-            ->send(new OrderConfirmation($data));
+        Mail::to(auth()->user())->send(new OrderConfirmation($data));
     }
-
 }
